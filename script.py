@@ -72,7 +72,7 @@ class MovieManager:
             connection.commit()
 
     def cached_data(self, title, type=None):
-        with sqlite3.connect('self.db_name') as connection:
+        with sqlite3.connect(self.db_name) as connection:
             cursor = connection.cursor()
 
             if type:
