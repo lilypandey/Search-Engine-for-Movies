@@ -31,7 +31,7 @@ class MovieManager:
             return None
 
     def sqlite_db(self):
-        with sqlite3.connect('movies.db') as connection:
+        with sqlite3.connect(self.db_name) as connection:
             cursor = connection.cursor()
             table= '''
             CREATE TABLE IF NOT EXISTS movies(
@@ -52,7 +52,7 @@ class MovieManager:
 
 
     def insert_movies_into_db(self, movies_data):
-        with sqlite3.connect('movies.db') as connection:
+        with sqlite3.connect(self.db_name) as connection:
             cursor = connection.cursor()
 
             for movie in movies_data:
@@ -72,7 +72,7 @@ class MovieManager:
             connection.commit()
 
     def cached_data(self, title, type=None):
-        with sqlite3.connect('movies.db') as connection:
+        with sqlite3.connect('self.db_name') as connection:
             cursor = connection.cursor()
 
             if type:
