@@ -1,50 +1,111 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+    line-height: 1.6;
+    margin: 0;
     padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-h1, h2 {
-    color: #333;
+html[data-theme="light"] {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --card-bg: #fff;
+    --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-form {
+html[data-theme="dark"] {
+    --bg-color: #333;
+    --text-color: #f5f5f5;
+    --card-bg: #444;
+    --card-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.theme-toggle {
+    text-align: right;
     margin-bottom: 20px;
 }
 
-input {
-    padding: 10px;
-    width: 250px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #007BFF;
+    padding: 8px 15px;
+    background-color: #4CAF50;
     color: white;
-    border-radius: 5px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+button:hover {
+    background-color: #45a049;
 }
 
-li {
-    margin: 10px 0;
+form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
     padding: 10px;
-    background: white;
-    border-radius: 5px;
-    display: inline-block;
-    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
 }
 
-img {
-    display: block;
-    margin: 0 auto;
-    border-radius: 5px;
+form button {
+    border-radius: 0 4px 4px 0;
+}
+
+#back-button {
+    margin-bottom: 20px;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.movie-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.movie-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.movie-card a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.movie-card a:hover {
+    text-decoration: underline;
 }

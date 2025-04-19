@@ -1,35 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Search</title>
-    <link rel="stylesheet" href="static/style.css">
+    <title>Movie Search App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Movie Search App</h1>
-    <form action="/search" method="get">
-        <input type="text" name="query" placeholder="Search for a movie...">
-        <button type="submit">Search</button>
-    </form>
-    
-    {% if movies %}
-    <h2>Search Results</h2>
-    <ul>
-        {% for movie in movies %}
-        <li>
-            <img src="{{ movie[4] }}" alt="{{ movie[0] }}" width="100">
-            <p><strong>{{ movie[0] }}</strong> ({{ movie[1] }})</p>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    <h2>IMDb Top 250 Movies</h2>
-    <ul>
-        {% for movie in top_movies %}
-        <li>{{ movie }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>🎬 Movie Search App</h1>
+
+        <div class="theme-toggle">
+            <button onclick="toggleTheme()">🌗 Toggle Theme</button>
+        </div>
+
+        <!-- OMDb Search -->
+        <form id="omdb-search-form">
+            <input type="text" name="query" placeholder="Search for a movie (OMDb)..." id="omdb-query">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- IMDb Top 250 Filter -->
+        <form id="top250-search-form">
+            <input type="text" name="query" placeholder="Search IMDb Top 250..." id="top250-query">
+            <button type="submit">Search IMDb</button>
+        </form>
+
+        <button id="back-button" {% if not movies %}style="display:none"{% endif %} onclick="loadTop250()">🔙 Back to IMDb Top 250</button>
+
+        <!-- Movie Results Container -->
+        <div id="results">
+            {% if movies %}
+                <h2>Search Results (OMDb API)</h2>
+                <div class="movie-grid">
+                    {% for movie in movies %}
+                        <div class="movie-card">
+                            {% if movie[5] != "N/A" and movie[5] %}
+                                <img src="{{ movie[5] }}" alt="{{ movie[1] }}">
+                            {% else %}
+                                <div style="height: 200px; background-color: #ddd; display: flex; align-items: center; justify-content: center;">No Image</div>
+                            {% endif %}
+                            <p><strong>{{ movie[1] }}</strong> ({{ movie[2] }})</p>
+                            <p>Type: {{ movie[4] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            {% if top_movies %}
+                <h2>IMDb Top 250 Movies</h2>
+                <div class="movie-grid">
+                    {% for title, link in top_movies.items() %}
+                        <div class="movie-card">
+                            <a href="{{ link }}" target="_blank">{{ title }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% if not movies %}
+                    <p>Loading IMDb Top 250 movies... If no movies appear, there might be an issue with the scraping process.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
+        }
+
+        function loadTop250() {
+            window.location.href = '/';
+        }
+
+        document.getElementById('omdb-search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('omdb-query').value;
+            if (query.trim() !== '') {
+                window.location.href = `/search?query=${encodeURIComponent(query)}`;
+            }
+        });
+
+        document.getElementById('top250-search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('top250-query').value;
+            if (query.trim() !== '') {
+                window.location.href = `/search_top250?query=${encodeURIComponent(query)}`;
+            }
+        });
+    </script>
 </body>
 </html>
