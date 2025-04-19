@@ -31,7 +31,7 @@
         <!-- Movie Results Container -->
         <div id="results">
             {% if movies %}
-                <h2>Search Results (OMDb API)</h2>
+                <h2>🎥 Search Results (OMDb API)</h2>
                 <div class="movie-grid">
                     {% for movie in movies %}
                         <div class="movie-card">
@@ -46,20 +46,25 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            
+
             {% if top_movies %}
-                <h2>IMDb Top 250 Movies</h2>
-                <div class="movie-grid">
-                    {% for title, link in top_movies.items() %}
-                        <div class="movie-card">
-                            <a href="{{ link }}" target="_blank">{{ title }}</a>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                {% if not movies %}
-                    <p>Loading IMDb Top 250 movies... If no movies appear, there might be an issue with the scraping process.</p>
-                {% endif %}
+                <h2>⭐ IMDb Top 250 Movies</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Movie Title</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for title, link in top_movies.items() %}
+                        <tr>
+                            <td>{{ title }}</td>
+                            <td><a href="{{ link }}" target="_blank" class="view-btn">View on IMDb</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             {% endif %}
         </div>
     </div>

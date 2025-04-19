@@ -109,3 +109,47 @@ form button {
 .movie-card a:hover {
     text-decoration: underline;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+  }
+  
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  tr:hover {
+    background-color: rgba(0,0,0,0.05);
+  }
+  
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .view-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .view-btn:hover {
+    background-color: #45a049;
+    text-decoration: none !important;
+  }
